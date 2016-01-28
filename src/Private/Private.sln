@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Private.Web", "src\Private.Web\Private.Web.xproj", "{BDDCD145-B595-4749-AC77-38BEA45FB869}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Private.Core", "src\Private.Core\Private.Core.xproj", "{C8869868-A131-4137-B0A4-ABFA3F2C21B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +24,16 @@ Global
 		{BDDCD145-B595-4749-AC77-38BEA45FB869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDDCD145-B595-4749-AC77-38BEA45FB869}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDDCD145-B595-4749-AC77-38BEA45FB869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8869868-A131-4137-B0A4-ABFA3F2C21B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8869868-A131-4137-B0A4-ABFA3F2C21B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8869868-A131-4137-B0A4-ABFA3F2C21B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8869868-A131-4137-B0A4-ABFA3F2C21B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{BDDCD145-B595-4749-AC77-38BEA45FB869} = {1C2E500B-3D5F-469E-B0B2-3D7257824BF9}
+		{C8869868-A131-4137-B0A4-ABFA3F2C21B3} = {1C2E500B-3D5F-469E-B0B2-3D7257824BF9}
 	EndGlobalSection
 EndGlobal
