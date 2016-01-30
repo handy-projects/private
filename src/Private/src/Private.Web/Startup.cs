@@ -4,6 +4,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Private.Core.Repositories;
 
 namespace Private.Web
 {
@@ -40,10 +41,11 @@ namespace Private.Web
             /*services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();*/
-
-            //services.AddMvc();
+                
+            services.AddMvc();
 
             // Add application services.
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             //services.AddTransient<IEmailSender, AuthMessageSender>();
             //services.AddTransient<ISmsSender, AuthMessageSender>();
         }
@@ -88,12 +90,12 @@ namespace Private.Web
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            /*app.UseMvc(routes =>
+            app.UseMvc(/*routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });*/
+            }*/);
         }
 
         // Entry point for the application.
