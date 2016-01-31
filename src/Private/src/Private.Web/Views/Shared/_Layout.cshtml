@@ -86,6 +86,15 @@
         <script src="~/dist/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="~/dist/js/demo.js"></script>
+
+        <script src="~/node_modules/es6-shim/es6-shim.min.js"></script>
+        <script src="~/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+        <script src="~/node_modules/rxjs/bundles/Rx.umd.js"></script>
+        <script src="~/node_modules/angular2/bundles/angular2-all.umd.js"></script>
+        <!-- 2. Load our 'modules' -->
+        <script src='~/app/main/app.component.js'></script>
+        <script src='~/app/app.js'></script>
+
         @RenderSection("scripts", required: false)
     </body>
 </html>

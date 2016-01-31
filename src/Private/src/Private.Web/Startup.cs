@@ -4,6 +4,7 @@ using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.StaticFiles;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -121,9 +122,9 @@ namespace Private.Web
 
             if (env.IsDevelopment())
             {
-                //app.UseBrowserLink();
-                //app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage();
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -147,9 +148,8 @@ namespace Private.Web
             // serve index.html from wwwroot
             //app.UseDefaultFiles();
             app.UseStaticFiles();
-            
 
-            
+
 
             // Bearer token auth
             // http://stackoverflow.com/questions/29048122/token-based-authentication-in-asp-net-5-vnext/29698502#29698502
