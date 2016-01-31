@@ -42,4 +42,14 @@ gulp.task("min:css", function () {
         .pipe(gulp.dest("."));
 });
 
+var exec = require('child_process').exec;
+
+gulp.task("tsc:w", function (cb) {
+    exec('cd src\\Private.Web\\wwwroot | npm run tsc:w', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
 gulp.task("min", ["min:js", "min:css"]);

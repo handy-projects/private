@@ -87,13 +87,30 @@
         <!-- AdminLTE for demo purposes -->
         <script src="~/dist/js/demo.js"></script>
 
+        <!-- Angular 2 App -->
         <script src="~/node_modules/es6-shim/es6-shim.min.js"></script>
+        <script src="~/node_modules/systemjs/dist/system-polyfills.js"></script>
+
         <script src="~/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-        <script src="~/node_modules/rxjs/bundles/Rx.umd.js"></script>
-        <script src="~/node_modules/angular2/bundles/angular2-all.umd.js"></script>
-        <!-- 2. Load our 'modules' -->
-        <script src='~/app/main/app.component.js'></script>
-        <script src='~/app/app.js'></script>
+        <script src="~/node_modules/systemjs/dist/system.src.js"></script>
+        <script src="~/node_modules/rxjs/bundles/Rx.js"></script>
+        <script src="~/node_modules/angular2/bundles/angular2.dev.js"></script>
+        <script src="~/node_modules/angular2/bundles/router.dev.js"></script>
+        <script src="~/node_modules/angular2/bundles/http.dev.js"></script>
+
+        <!-- 2. Configure SystemJS -->
+        <script>
+          System.config({
+            packages: {
+              app: {
+                format: 'register',
+                defaultExtension: 'js'
+              }
+            }
+          });
+          System.import('/app/start')
+                .then(null, console.error.bind(console));
+        </script>
 
         @RenderSection("scripts", required: false)
     </body>
