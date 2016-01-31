@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using Microsoft.AspNet.Authentication.Cookies;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Http;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -46,6 +49,12 @@ namespace Private.Web
 
             services.AddAntiforgery();
 
+            // configure policys and claims
+            // http://stackoverflow.com/questions/31464359/custom-authorizeattribute-in-asp-net-5-mvc-6
+            services.Configure<AuthorizationOptions>(options => {
+                options.AddPolicy("ManageStore", policy => policy.RequireClaim("Action", "ManageStore"));
+            });
+
             //services.AddAuthorization()
 
             // Add application services.
@@ -85,10 +94,23 @@ namespace Private.Web
 
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
-            // server index.html from wwwroot
+            // serve index.html from wwwroot
             //app.UseDefaultFiles();
             app.UseStaticFiles();
             
+
+            app.UseCookieAuthentication(options =>
+            {
+                options.LoginPath = new PathString("/Account/LogIn");
+                options.AutomaticAuthenticate = true;
+                options.AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.CookieHttpOnly = true;
+                options.CookieName = "PRIVATE";
+            });
+
+            // Bearer token auth
+            // http://stackoverflow.com/questions/29048122/token-based-authentication-in-asp-net-5-vnext/29698502#29698502
+
 
             //app.UseIdentity();
 

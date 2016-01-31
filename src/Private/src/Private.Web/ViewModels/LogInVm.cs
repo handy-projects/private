@@ -9,6 +9,9 @@ namespace Private.Web.ViewModels
 {
     public class LogInVm
     {
+        private const string ADMIN_EMAIL = "wbserg@gmail.com";
+        private const string ADMIN_PASSWORD = "a1b2c3d4!";
+
         public string Email { get; set; }
 
         public string Password { get; set; }
@@ -34,9 +37,10 @@ namespace Private.Web.ViewModels
 
         public async Task Login()
         {
-            if(Email.Is("admin") && Password.Is("serg"))
+            if(Email.Is(ADMIN_EMAIL) && Password.Is(ADMIN_PASSWORD))
             {
                 IsLoginSuccess = true;
+                // add cookie
                 LoginSuccess.Raise();
             }
             else
