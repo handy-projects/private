@@ -3,11 +3,13 @@ using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
+using Microsoft.AspNet.Identity;
 using Microsoft.Data.Entity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Private.Core.Repositories;
+using System.Threading.Tasks;
 
 namespace Private.Web
 {
@@ -49,13 +51,28 @@ namespace Private.Web
 
             services.AddAntiforgery();
 
-            // configure policys and claims
-            // http://stackoverflow.com/questions/31464359/custom-authorizeattribute-in-asp-net-5-mvc-6
-            services.Configure<AuthorizationOptions>(options => {
-                options.AddPolicy("ManageStore", policy => policy.RequireClaim("Action", "ManageStore"));
+            services.AddAuthentication(options =>
+            {
+                options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
 
-            //services.AddAuthorization()
+            //services.Configure<CookieAuthenticationOptions>(options =>
+            //{
+            //    options.LoginPath = new PathString("/Account/LogIn");
+            //});
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Cookies.ApplicationCookie.LoginPath = new Microsoft.AspNet.Http.PathString("/Account/LogIn");
+            });
+
+            // configure policys and claims
+            // http://stackoverflow.com/questions/31464359/custom-authorizeattribute-in-asp-net-5-mvc-6
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ManageStore", policy => policy.RequireClaim("Action", "ManageStore"));
+            });
 
             // Add application services.
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -69,11 +86,44 @@ namespace Private.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseCookieAuthentication(options =>
+            {
+                options.LoginPath = new PathString("/Account/LogIn");
+                // LoginPath redirect only with this shit 
+                options.AutomaticChallenge = true;
+                
+
+                options.AutomaticAuthenticate = true;
+                options.AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.CookieHttpOnly = true;
+                options.CookieName = "PRIVATE";
+                //options.Events = new CookieAuthenticationEvents()
+                //{
+                //    OnRedirectToLogin = ctx =>
+                //    {
+                //        if (ctx.Request.Path.StartsWithSegments("/api") &&
+                //        ctx.Response.StatusCode == 200)
+                //        {
+                //            ctx.Response.StatusCode = 401;
+                //            return Task.FromResult<object>(null);
+                //        }
+                //        else
+                //        {
+                //            ctx.Response.Redirect(ctx.RedirectUri);
+                //            return Task.FromResult<object>(null);
+                //        }
+                //    }
+
+                //};
+
+                //.
+            });
+
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseBrowserLink();
+                //app.UseDeveloperExceptionPage();
+                //app.UseDatabaseErrorPage();
             }
             else
             {
@@ -92,21 +142,14 @@ namespace Private.Web
                 catch { }
             }
 
-            app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
+            app.UseIISPlatformHandler();
 
             // serve index.html from wwwroot
             //app.UseDefaultFiles();
             app.UseStaticFiles();
             
 
-            app.UseCookieAuthentication(options =>
-            {
-                options.LoginPath = new PathString("/Account/LogIn");
-                options.AutomaticAuthenticate = true;
-                options.AuthenticationScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.CookieHttpOnly = true;
-                options.CookieName = "PRIVATE";
-            });
+            
 
             // Bearer token auth
             // http://stackoverflow.com/questions/29048122/token-based-authentication-in-asp-net-5-vnext/29698502#29698502
@@ -120,7 +163,7 @@ namespace Private.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=LogIn}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 

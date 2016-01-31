@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Authentication.Cookies;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 using Private.Infra.Extensions;
 using Private.Web.ViewModels;
@@ -10,7 +11,7 @@ namespace Private.Web.Controllers
 {
     public class AccountController : Controller
     {
-        [HttpGet]
+        [HttpGet, AllowAnonymous]
         public ActionResult LogIn()
         { 
             return View();
