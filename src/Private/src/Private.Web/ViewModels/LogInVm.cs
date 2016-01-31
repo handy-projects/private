@@ -13,6 +13,8 @@ namespace Private.Web.ViewModels
 
         public string Password { get; set; }
 
+        public bool? IsLoginSuccess { get; private set; }
+
         public event Action LoginSuccess;
 
         public event Action LoginFailed;
@@ -33,9 +35,12 @@ namespace Private.Web.ViewModels
         public async Task Login()
         {
             if(Email.Is("admin") && Password.Is("serg"))
-                LoginSuccess();
+            {
+                IsLoginSuccess = true;
+                LoginSuccess.Raise();
+            }
             else
-                LoginFailed();
+                LoginFailed.Raise();
         }
     }
 }

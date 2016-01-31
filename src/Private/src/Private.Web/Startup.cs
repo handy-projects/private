@@ -44,6 +44,10 @@ namespace Private.Web
                 
             services.AddMvc();
 
+            services.AddAntiforgery();
+
+            //services.AddAuthorization()
+
             // Add application services.
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             //services.AddTransient<IEmailSender, AuthMessageSender>();
@@ -82,7 +86,7 @@ namespace Private.Web
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
             // server index.html from wwwroot
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
             app.UseStaticFiles();
             
 
@@ -90,12 +94,12 @@ namespace Private.Web
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc(/*routes =>
+            app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            }*/);
+                    template: "{controller=Account}/{action=LogIn}/{id?}");
+            });
         }
 
         // Entry point for the application.
